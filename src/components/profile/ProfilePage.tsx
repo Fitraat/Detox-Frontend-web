@@ -39,7 +39,7 @@ export default function ProfilePage() {
     "Profile",
     "Pro Recovery",
     "Kegel Exercise",
-    "Pre Marriage",
+    "Child Protection",
   ];
 
   return (
@@ -136,7 +136,7 @@ export default function ProfilePage() {
               />
             )}
 
-            {activeSection === "Pre Marriage" && (
+            {activeSection === "child protection" && (
               <PreMarriage
                 user={{
                   username: name,

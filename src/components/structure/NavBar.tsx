@@ -15,6 +15,7 @@ const navbarLinks = [
   { name: "Programs", href: "/programs" },
   { name: "Blocker", href: "/blocker" },
   { name: "Emergency", href: "/emergency" },
+  { name: "Blog", href: "/authBlog" },
 ];
 
 function NavBar() {

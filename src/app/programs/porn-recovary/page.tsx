@@ -16,52 +16,10 @@ const MyTasks: React.FC = () => {
   }, []);
   if (!mount) return <ProgramSclaton />;
 
-  if (!userData) {
-    return (
-      <div className="min-h-screen flex items-center justify-center px-4">
-        <div className="max-w-xl w-full rounded-xl border bg-white p-8 text-center shadow-sm">
-          <h1 className="text-2xl font-semibold text-gray-800 mb-3">
-            Login Required
-          </h1>
-          <p className="text-gray-600 mb-6">
-            This program is available to paid members. Please login first to
-            continue.
-          </p>
-          <button
-            onClick={() => window.location.replace("/login")}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg transition-all"
-          >
-            Go to Login
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  if (userData.fitraatPayment !== "Complete") {
-    return (
-      <div className="min-h-screen flex items-center justify-center px-4">
-        <div className="max-w-xl w-full rounded-xl border bg-white p-8 text-center shadow-sm">
-          <h1 className="text-2xl font-semibold text-gray-800 mb-3">
-            Paid Access Required
-          </h1>
-          <p className="text-gray-600 mb-6">
-            Free trial has been removed. Please complete payment to unlock the
-            full program.
-          </p>
-          <button
-            onClick={() => window.location.replace("/payment")}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg transition-all"
-          >
-            Go to Payment
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  // Extract required data for authenticated users
-  const { id: userId, currentDay: authDayDataId, startDate } = userData;
+  // Allow guest access. Logged-in users keep their own progress.
+  const userId = userData?.id;
+  const authDayDataId = userData?.currentDay || 1;
+  const startDate = userData?.startDate;
   const today = new Date();
   const start = new Date(startDate || today);
   const daysLeft =

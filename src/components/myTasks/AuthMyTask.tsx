@@ -22,7 +22,7 @@ function AuthMyTask({
   daysLeft,
 }: {
   authDayDataId: number;
-  userId: number;
+  userId?: number;
   daysLeft: number;
 }) {
   const router = useRouter();
@@ -88,21 +88,25 @@ function AuthMyTask({
         message.success(
           "Hurray this is you last day of task. Then you become spartan"
         );
-        await updataUserDay({
-          currentDay: authDayDataId + 1,
-          compliteDay: authDayDataId,
-          userId: userId,
-        });
+        if (userId) {
+          await updataUserDay({
+            currentDay: authDayDataId + 1,
+            compliteDay: authDayDataId,
+            userId: userId,
+          });
+        }
       } else if (authDayDataId + 1 > 40) {
         message.success(
           "Congratulations you have successfully completed your tasks for 40 day"
         );
       } else if (authDayDataId + 1 <= 40) {
-        await updataUserDay({
-          currentDay: authDayDataId + 1,
-          compliteDay: authDayDataId,
-          userId: userId,
-        });
+        if (userId) {
+          await updataUserDay({
+            currentDay: authDayDataId + 1,
+            compliteDay: authDayDataId,
+            userId: userId,
+          });
+        }
       }
     } else {
       setLocalStorageData((prevState: typeof localStorageData) => ({
@@ -139,7 +143,7 @@ function AuthMyTask({
     if (authenticatedDayData) {
       const authDayData = authenticatedDayData[0];
       if (authDayData) {
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setBlog({
           id: authDayData?.pro_blog?.documentId,
           title: authDayData?.pro_blog?.titile,

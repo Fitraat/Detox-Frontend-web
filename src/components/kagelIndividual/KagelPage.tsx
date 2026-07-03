@@ -110,10 +110,12 @@ export default function KegelPage({ kegel, DayCount, userId, setDay }: Props) {
         // If last session → move to next day morning
 
         if (currentDay < 365) {
-          await updateUserKagelDay({
-            compliteDay: currentDay + 1,
-            userId: userId,
-          });
+          if (userId) {
+            await updateUserKagelDay({
+              compliteDay: currentDay + 1,
+              userId: userId,
+            });
+          }
           localStorage.setItem(
             "kegelProgress",
             JSON.stringify({

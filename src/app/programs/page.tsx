@@ -1,6 +1,5 @@
 "use client";
 
-import { useAppSelector } from "@/redux/hooks";
 import { PlayCircleOutlined, ReadOutlined } from "@ant-design/icons";
 import { Button, Card, Modal, Tag } from "antd";
 import Image, { StaticImageData } from "next/image";
@@ -14,7 +13,6 @@ import recovary from "./../../app/assets/recovary.png";
 type Program = {
   id: number;
   link: string;
-  paymentKey: "fitraatPayment" | "kagelPayment" | "childProtectionPayment";
   title: string;
   image: StaticImageData;
   description: string;
@@ -27,7 +25,6 @@ const programs: Program[] = [
   {
     id: 1,
     link: "/programs/porn-recovary",
-    paymentKey: "fitraatPayment",
     title: "Porn Recovery Program",
     image: recovary,
     description:
@@ -51,7 +48,6 @@ const programs: Program[] = [
   {
     id: 2,
     link: "/programs/kegel-exercise",
-    paymentKey: "kagelPayment",
     title: "Kegel Exercise Program",
     image: kagelIndividual,
     description:
@@ -74,9 +70,8 @@ const programs: Program[] = [
   },
   {
     id: 3,
-    link: "/programs/pre-marriage",
-    paymentKey: "childProtectionPayment",
-    title: "Pre-Marriage Solution",
+    link: "/programs/child-protection",
+    title: "child protection",
     image: childProtection, // replace with your actual image import
     description:
       "A complete guidance program to prepare you for a strong, confident, and addiction-free marriage — built on emotional maturity, self-control, and mutual respect.",
@@ -101,7 +96,6 @@ const programs: Program[] = [
 const ProgramsPage: React.FC = () => {
   const router = useRouter();
   const [selected, setSelected] = useState<Program | null>(null);
-  const userData = useAppSelector((state) => state.auth.userInfo);
 
   // if (!window) return <FancyLoading />;
 
@@ -121,9 +115,8 @@ const ProgramsPage: React.FC = () => {
 
         <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
           {programs.map((p) => {
-            const hasAccess = userData?.[p.paymentKey] === "Complete";
-            const ctaHref = hasAccess ? p.link : "/payment";
-            const ctaText = hasAccess ? "Continue" : "Unlock Program";
+            const ctaHref = p.link;
+            const ctaText = "Continue";
 
             return (
               <article
@@ -131,63 +124,63 @@ const ProgramsPage: React.FC = () => {
                 className="transform transition duration-300 hover:-translate-y-2 h-full"
               >
                 <Card
-                hoverable
-                bordered={false}
-                className="rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300 !cursor-default h-full flex flex-col"
-                cover={
-                  <div className="relative h-56 w-full bg-gray-100">
-                    <Image
-                      src={p.image}
-                      alt={p.title}
-                      fill
-                      className="object-cover"
-                      placeholder="blur"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 300px"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/35 to-transparent" />
-                  </div>
-                }
-              >
-                <div className="px-1 pb-2">
-                  <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 ">
-                    {p.title}
-                  </h2>
+                  hoverable
+                  bordered={false}
+                  className="rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300 !cursor-default h-full flex flex-col"
+                  cover={
+                    <div className="relative h-56 w-full bg-gray-100">
+                      <Image
+                        src={p.image}
+                        alt={p.title}
+                        fill
+                        className="object-cover"
+                        placeholder="blur"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 300px"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/35 to-transparent" />
+                    </div>
+                  }
+                >
+                  <div className="px-1 pb-2">
+                    <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 ">
+                      {p.title}
+                    </h2>
 
-                  <div className="flex flex-wrap gap-2 mb-2">
-                    {p.tags.map((tag) => (
-                      <Tag key={tag} color="default">
-                        {tag.toUpperCase()}
-                      </Tag>
-                    ))}
-                  </div>
+                    <div className="flex flex-wrap gap-2 mb-2">
+                      {p.tags.map((tag) => (
+                        <Tag key={tag} color="default">
+                          {tag.toUpperCase()}
+                        </Tag>
+                      ))}
+                    </div>
 
-                  <p className="text-sm text-gray-600 mb-4 line-clamp-3">
-                    {p.description}
-                  </p>
+                    <p className="text-sm text-gray-600 mb-4 line-clamp-3">
+                      {p.description}
+                    </p>
 
-                  <div className="flex items-center justify-between gap-3">
-                    <Link href={ctaHref} className="flex-1">
+                    <div className="flex items-center justify-between gap-3">
+                      <Link href={ctaHref} className="flex-1">
+                        <Button
+                          type="primary"
+                          icon={<PlayCircleOutlined />}
+                          size="middle"
+                          className="w-full flex items-center justify-center gap-2 py-2 rounded-md"
+                        >
+                          {ctaText}
+                        </Button>
+                      </Link>
+
                       <Button
-                        type="primary"
-                        icon={<PlayCircleOutlined />}
+                        type="default"
+                        icon={<ReadOutlined />}
                         size="middle"
-                        className="w-full flex items-center justify-center gap-2 py-2 rounded-md"
+                        onClick={() => setSelected(p)}
+                        className="flex-1 flex items-center justify-center gap-2 py-2 rounded-md"
                       >
-                        {ctaText}
+                        Read More
                       </Button>
-                    </Link>
-
-                    <Button
-                      type="default"
-                      icon={<ReadOutlined />}
-                      size="middle"
-                      onClick={() => setSelected(p)}
-                      className="flex-1 flex items-center justify-center gap-2 py-2 rounded-md"
-                    >
-                      Read More
-                    </Button>
+                    </div>
                   </div>
-                </div>
                 </Card>
               </article>
             );
@@ -247,20 +240,12 @@ const ProgramsPage: React.FC = () => {
 
             <div className="flex flex-col sm:flex-row gap-3 sm:justify-end mt-4">
               <Button
-                onClick={() =>
-                  router.push(
-                    userData?.[selected.paymentKey] === "Complete"
-                      ? selected.link
-                      : "/payment"
-                  )
-                }
+                onClick={() => router.push(selected.link)}
                 type="primary"
                 icon={<PlayCircleOutlined />}
                 className="w-full sm:w-auto"
               >
-                {userData?.[selected.paymentKey] === "Complete"
-                  ? "Continue"
-                  : "Unlock Program"}
+                Continue
               </Button>
 
               <Button

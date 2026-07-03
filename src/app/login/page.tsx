@@ -60,7 +60,7 @@ function LoginPage() {
         setLoading(true); // Set loading state to true
         try {
           const result = await loginUser(formData);
-          console.log(result);
+          console.log(result, "result");
           if (result.error) {
             if (
               // eslint-disable-next-line @typescript-eslint/no-explicit-any

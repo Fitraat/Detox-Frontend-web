@@ -77,10 +77,12 @@ export default function ChildProtectionPage() {
     }
     if (direction === "next") {
       // ✅ All videos done → next day
-      await updateUserChildProtectionDay({
-        childProtectionDayNumber: parseInt(day) + 1,
-        userId,
-      });
+      if (userId) {
+        await updateUserChildProtectionDay({
+          childProtectionDayNumber: parseInt(day) + 1,
+          userId,
+        });
+      }
       setIsFinishModalOpen(true);
       setDay((prevDay) => (parseInt(prevDay) + 1).toString());
     } else {
