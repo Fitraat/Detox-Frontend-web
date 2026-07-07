@@ -1,5 +1,4 @@
 import LandingFaqSection from "@/components/landing/LandingFaqSection";
-import LandingFinalSection from "@/components/landing/LandingFinalSection";
 import LandingGetStartedSection from "@/components/landing/LandingGetStartedSection";
 import LandingHeader from "@/components/landing/LandingHeader";
 import LandingHero from "@/components/landing/LandingHero";
@@ -8,13 +7,13 @@ import LandingProblemSection from "@/components/landing/LandingProblemSection";
 import LandingProgramPreviewSection from "@/components/landing/LandingProgramPreviewSection";
 import LandingProgramsSection from "@/components/landing/LandingProgramsSection";
 import LandingTestimonialsSection from "@/components/landing/LandingTestimonialsSection";
+import Footer from "@/components/structure/Footer";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title:
-    "Porn Recovery, Kegel Training & Child Protection Guidance | Fitraat",
+  title: "Porn Recovery, Kegel Training & Child Protection Guidance | Fitraat",
   description:
-    "Build healthy habits with guided porn recovery, kegel exercise training, and child protection guidance for families. Start your free assessment on Fitraat.",
+    "Build healthy habits with guided porn recovery, kegel exercise training, and child protection guidance for families on Fitraat.",
 };
 
 const websiteSchema = {
@@ -45,7 +44,7 @@ export default function HomePage() {
         <LandingProgramPreviewSection />
         <LandingGetStartedSection />
         <LandingFaqSection />
-        <LandingFinalSection />
+        <Footer />
       </main>
       <script
         type="application/ld+json"

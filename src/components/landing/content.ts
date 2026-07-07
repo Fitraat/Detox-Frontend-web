@@ -1,7 +1,7 @@
-import type { StaticImageData } from "next/image";
-import childSafetyImage from "@/app/assets/premarriage.png";
 import kegelImage from "@/app/assets/kagelIndividual.png";
+import childSafetyImage from "@/app/assets/premarriage.png";
 import recoveryImage from "@/app/assets/recovary.png";
+import type { StaticImageData } from "next/image";
 
 export type ProgramCard = {
   id: string;
@@ -51,7 +51,8 @@ export const programs: ProgramCard[] = [
     route: "/programs/porn-recovary",
     summary:
       "A guided path to rebuild clarity, self-control, and healthy habits through daily actions.",
-    outcome: "40-day framework with accountability tasks and progress milestones.",
+    outcome:
+      "40-day framework with accountability tasks and progress milestones.",
     image: recoveryImage,
     sampleDay: [
       "5-minute reflection prompt",
@@ -65,7 +66,8 @@ export const programs: ProgramCard[] = [
     route: "/programs/kegel-exercise",
     summary:
       "Progressive pelvic-floor training designed to improve control and confidence.",
-    outcome: "Guided squeeze/relax routines with measurable daily improvements.",
+    outcome:
+      "Guided squeeze/relax routines with measurable daily improvements.",
     image: kegelImage,
     sampleDay: [
       "Morning guided set",
@@ -76,10 +78,11 @@ export const programs: ProgramCard[] = [
   {
     id: "child-digital-safety",
     name: "Parents & Child Digital Safety Course",
-    route: "/programs/pre-marriage",
+    route: "/programs/child-protection",
     summary:
       "Practical digital-safety education to help families build safe online habits.",
-    outcome: "Clear parent playbooks, conversation scripts, and protection checklists.",
+    outcome:
+      "Clear parent playbooks, conversation scripts, and protection checklists.",
     image: childSafetyImage,
     sampleDay: [
       "Family screen-time audit",
@@ -91,9 +94,9 @@ export const programs: ProgramCard[] = [
 
 export const steps = [
   {
-    title: "Take free assessment",
+    title: "Review your starting point",
     description:
-      "Answer a short set of questions so we can guide your starting point.",
+      "Understand your current challenges so you can choose the right program.",
   },
   {
     title: "Choose your program",
@@ -137,9 +140,9 @@ export const faqs = [
       "It is designed for adults who want guided recovery, men building pelvic strength, and parents who want practical digital-safety guidance for children.",
   },
   {
-    question: "Can I start for free?",
+    question: "How do I get started?",
     answer:
-      "Yes. Start with a free assessment first, then choose the right program based on your needs.",
+      "Explore the available programs, choose the one that fits your needs, and follow the daily guidance.",
   },
   {
     question: "Will my information stay private?",

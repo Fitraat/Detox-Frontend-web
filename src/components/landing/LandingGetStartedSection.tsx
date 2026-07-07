@@ -13,7 +13,7 @@ export default function LandingGetStartedSection() {
             id="get-started-title"
             className="text-2xl font-bold text-slate-900 sm:text-3xl"
           >
-            Start your journey with a free assessment.
+            Start your journey with structured guidance.
           </h2>
           <p className="mt-3 max-w-2xl text-slate-600">
             Build momentum with daily guidance, clear structure, and progress
@@ -22,11 +22,15 @@ export default function LandingGetStartedSection() {
 
           <div className="mt-6 grid gap-4 text-sm text-slate-700 sm:grid-cols-3">
             <div className="rounded-lg border border-slate-200 bg-white p-4">
-              <p className="font-semibold text-slate-900">Porn Recovery Program</p>
+              <p className="font-semibold text-slate-900">
+                Porn Recovery Program
+              </p>
               <p className="mt-2">Guided daily recovery plan</p>
             </div>
             <div className="rounded-lg border border-slate-200 bg-white p-4">
-              <p className="font-semibold text-slate-900">Kegel Exercise Program</p>
+              <p className="font-semibold text-slate-900">
+                Kegel Exercise Program
+              </p>
               <p className="mt-2">Structured routine and consistency support</p>
             </div>
             <div className="rounded-lg border border-slate-200 bg-white p-4">
@@ -41,10 +45,10 @@ export default function LandingGetStartedSection() {
             <Link
               href="/register"
               data-analytics-event="hero_cta_click"
-              data-analytics-label="Start Free Assessment"
+              data-analytics-label="Get Started"
               className="rounded-md bg-slate-900 px-6 py-3 text-center text-sm font-semibold text-white transition hover:bg-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-500"
             >
-              Start Free Assessment
+              Get Started
             </Link>
             <Link
               href="/programs"

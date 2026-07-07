@@ -52,7 +52,7 @@ export default function Page() {
       content: (
         <ul className="list-disc pl-5 text-gray-700">
           <li>40-Day Porn Addiction Recovery Program</li>
-          <li>Pre-Marriage Solution Program</li>
+          <li>child-protection Solution Program</li>
           <li>Kegel Exercise Program (6 months)</li>
           <li>Daily tasks, reminders, and motivational guidance</li>
         </ul>

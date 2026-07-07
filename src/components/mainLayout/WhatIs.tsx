@@ -112,12 +112,12 @@ export default function WhatIs() {
 
     {
       id: "marriage",
-      title: "Pre-Marriage Solution",
+      title: "child-protection Solution",
       shortDesc:
         "Prepare emotionally, mentally, and Islamically for a successful marriage with guidance and self-development tools.",
       modalFullContent: {
         intro:
-          "Fitraat’s Pre-Marriage Solution is a complete personal development program designed to help people build emotional intelligence, Islamic values, communication skills, and maturity before entering marriage.",
+          "Fitraat’s child-protection Solution is a complete personal development program designed to help people build emotional intelligence, Islamic values, communication skills, and maturity before entering marriage.",
         sections: [
           {
             heading: "Program Outcomes",

@@ -19,17 +19,17 @@ export default function LandingHero() {
           family digital safety support.
         </h1>
         <p className="mt-5 text-base text-slate-600 sm:text-lg">
-          One platform for three life-improving programs. Start with a free
-          assessment, follow proven daily steps, and track real progress.
+          One platform for three life-improving programs. Follow proven daily
+          steps and track real progress.
         </p>
         <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <Link
             href="/register"
             data-analytics-event="hero_cta_click"
-            data-analytics-label="Start Free Assessment"
+            data-analytics-label="Get Started"
             className="w-full rounded-md bg-slate-900 px-6 py-3 text-center text-sm font-semibold text-white transition hover:bg-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-500 sm:w-auto"
           >
-            Start Free Assessment
+            Get Started
           </Link>
           <Link
             href="/programs"
@@ -41,7 +41,10 @@ export default function LandingHero() {
           </Link>
         </div>
 
-        <ul className="mt-8 flex flex-wrap items-center justify-center gap-3" aria-label="Trust highlights">
+        <ul
+          className="mt-8 flex flex-wrap items-center justify-center gap-3"
+          aria-label="Trust highlights"
+        >
           {trustChips.map((chip) => (
             <li
               key={chip}

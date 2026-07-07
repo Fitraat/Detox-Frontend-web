@@ -1,6 +1,7 @@
 "use client";
 
 import KegelPage from "@/components/kagelIndividual/KagelPage";
+import ProgramLoginRequired from "@/components/programs/ProgramLoginRequired";
 import ProgramSclaton from "@/components/structure/ProgramSclaton";
 import { useGetKagelIndividualByDayIdQuery } from "@/redux/api/kagelindividualApi";
 import { useAppSelector } from "@/redux/hooks";
@@ -8,6 +9,11 @@ import React, { Suspense, useState } from "react";
 
 const KagelIndividualPage: React.FC = () => {
   const userData = useAppSelector((state) => state.auth.userInfo);
+
+  if (!userData) {
+    return <ProgramLoginRequired />;
+  }
+
   const d = userData?.kagelIndividualDayNumber?.toString();
   const [day, setDay] = useState(d || "1");
 

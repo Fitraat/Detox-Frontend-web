@@ -1,19 +1,21 @@
 "use client";
 
 import { PlayCircleOutlined, ReadOutlined } from "@ant-design/icons";
-import { Button, Card, Modal, Tag } from "antd";
+import { Button, Card, Modal, Tag, message } from "antd";
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 import kagelIndividual from "./../../app/assets/kagelIndividual.png";
 import childProtection from "./../../app/assets/premarriage.png";
 import recovary from "./../../app/assets/recovary.png";
+import { useCreateSubscribersMutation } from "@/redux/api/subscribeApi";
 
 type Program = {
   id: number;
   link: string;
   title: string;
+  isAvailable: boolean;
   image: StaticImageData;
   description: string;
   details: string;
@@ -26,6 +28,7 @@ const programs: Program[] = [
     id: 1,
     link: "/programs/porn-recovary",
     title: "Porn Recovery Program",
+    isAvailable: false,
     image: recovary,
     description:
       "A structured 40-day journey to overcome pornography addiction with guided videos, daily tasks, and community support.",
@@ -49,6 +52,7 @@ const programs: Program[] = [
     id: 2,
     link: "/programs/kegel-exercise",
     title: "Kegel Exercise Program",
+    isAvailable: true,
     image: kagelIndividual,
     description:
       "Guided Kegel exercises to improve pelvic strength, control and confidence — with timed sessions and progress tracking.",
@@ -71,7 +75,8 @@ const programs: Program[] = [
   {
     id: 3,
     link: "/programs/child-protection",
-    title: "child protection",
+    title: "Child Protection Program",
+    isAvailable: false,
     image: childProtection, // replace with your actual image import
     description:
       "A complete guidance program to prepare you for a strong, confident, and addiction-free marriage — built on emotional maturity, self-control, and mutual respect.",
@@ -96,6 +101,35 @@ const programs: Program[] = [
 const ProgramsPage: React.FC = () => {
   const router = useRouter();
   const [selected, setSelected] = useState<Program | null>(null);
+  const [email, setEmail] = useState("");
+  const [createSubscribers, { isLoading: isSubscribing }] =
+    useCreateSubscribersMutation();
+
+  const handleSubscribe = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const trimmedEmail = email.trim();
+
+    if (!trimmedEmail) {
+      message.error("Please enter your email address");
+      return;
+    }
+
+    try {
+      const result = await createSubscribers({
+        email: trimmedEmail,
+      });
+
+      if ("error" in result) {
+        message.success("You are already subscribed");
+        return;
+      }
+
+      message.success("Thanks! We will notify you when this program is ready.");
+      setEmail("");
+    } catch {
+      message.error("Something went wrong. Please try again.");
+    }
+  };
 
   // if (!window) return <FancyLoading />;
 
@@ -107,16 +141,16 @@ const ProgramsPage: React.FC = () => {
         </h1>
 
         <p className="text-center text-gray-600 max-w-2xl mx-auto mb-20">
-          Choose a program that fits your needs — guided recovery, physical
-          exercises, or tools for protecting children online. Click{" "}
-          <span className="font-medium">Try It</span> to begin or{" "}
-          <span className="font-medium">Read More</span> for details.
+          Our full system is under preparation. Only{" "}
+          <span className="font-medium">Kegel Exercise Program</span> is
+          currently ongoing. Other programs are coming soon and you can
+          subscribe for launch updates.
         </p>
 
         <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
           {programs.map((p) => {
-            const ctaHref = p.link;
-            const ctaText = "Continue";
+            const ctaHref = p.isAvailable ? p.link : "#";
+            const ctaText = p.isAvailable ? "Continue" : "Subscribe Now";
 
             return (
               <article
@@ -145,6 +179,9 @@ const ProgramsPage: React.FC = () => {
                     <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 ">
                       {p.title}
                     </h2>
+                    <Tag color={p.isAvailable ? "green" : "orange"} className="mb-3">
+                      {p.isAvailable ? "ONGOING" : "COMING SOON"}
+                    </Tag>
 
                     <div className="flex flex-wrap gap-2 mb-2">
                       {p.tags.map((tag) => (
@@ -159,16 +196,27 @@ const ProgramsPage: React.FC = () => {
                     </p>
 
                     <div className="flex items-center justify-between gap-3">
-                      <Link href={ctaHref} className="flex-1">
+                      {p.isAvailable ? (
+                        <Link href={ctaHref} className="flex-1">
+                          <Button
+                            type="primary"
+                            icon={<PlayCircleOutlined />}
+                            size="middle"
+                            className="w-full flex items-center justify-center gap-2 py-2 rounded-md"
+                          >
+                            {ctaText}
+                          </Button>
+                        </Link>
+                      ) : (
                         <Button
                           type="primary"
-                          icon={<PlayCircleOutlined />}
                           size="middle"
-                          className="w-full flex items-center justify-center gap-2 py-2 rounded-md"
+                          onClick={() => setSelected(p)}
+                          className="flex-1 flex items-center justify-center gap-2 py-2 rounded-md"
                         >
                           {ctaText}
                         </Button>
-                      </Link>
+                      )}
 
                       <Button
                         type="default"
@@ -213,6 +261,14 @@ const ProgramsPage: React.FC = () => {
             </div>
 
             <p className="text-gray-700 mt-2">{selected.details}</p>
+            {!selected.isAvailable && (
+              <div className="rounded-lg border border-amber-200 bg-amber-50 p-3">
+                <p className="text-sm text-amber-900">
+                  This system is not ready yet. If you are interested, subscribe
+                  now and we will notify you when it is launched.
+                </p>
+              </div>
+            )}
 
             {/* ✅ Features */}
             <div>
@@ -239,14 +295,39 @@ const ProgramsPage: React.FC = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3 sm:justify-end mt-4">
-              <Button
-                onClick={() => router.push(selected.link)}
-                type="primary"
-                icon={<PlayCircleOutlined />}
-                className="w-full sm:w-auto"
-              >
-                Continue
-              </Button>
+              {selected.isAvailable ? (
+                <Button
+                  onClick={() => router.push(selected.link)}
+                  type="primary"
+                  icon={<PlayCircleOutlined />}
+                  className="w-full sm:w-auto"
+                >
+                  Continue
+                </Button>
+              ) : (
+                <form
+                  onSubmit={handleSubscribe}
+                  className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row"
+                >
+                  <input
+                    type="email"
+                    name="email"
+                    required
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
+                    placeholder="Enter your email"
+                    className="h-10 w-full rounded-md border border-slate-300 px-3 text-sm outline-none focus:border-slate-500 focus:ring-2 focus:ring-slate-300 sm:w-64"
+                  />
+                  <Button
+                    htmlType="submit"
+                    type="primary"
+                    loading={isSubscribing}
+                    className="w-full sm:w-auto"
+                  >
+                    Subscribe now
+                  </Button>
+                </form>
+              )}
 
               <Button
                 onClick={() => setSelected(null)}
